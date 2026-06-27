@@ -1,0 +1,5 @@
+"""Small IBKR quant trading framework for personal minute-level strategies."""
+
+__all__ = ["__version__"]
+
+__version__ = "0.1.0"

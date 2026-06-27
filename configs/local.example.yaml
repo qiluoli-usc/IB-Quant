@@ -1,0 +1,105 @@
+# IB Gateway paper trading default is usually 4002; live Gateway is usually 4001.
+# TWS paper trading is usually 7497; live TWS is usually 7496.
+ib:
+  host: "127.0.0.1"
+  port: 4002
+  client_id: 1
+  readonly: true
+  connect_timeout_seconds: 10
+  reconnect_initial_seconds: 2
+  reconnect_max_seconds: 60
+  auto_restart_start: "02:00"
+  auto_restart_end: "02:15"
+
+symbols:
+  - AAPL
+  - MSFT
+  - NVDA
+  - AMZN
+  - META
+  - GOOGL
+  - GOOG
+  - TSLA
+  - AVGO
+  - COST
+  - NFLX
+  - AMD
+  - ADBE
+  - CSCO
+  - INTC
+  - QCOM
+  - TXN
+  - AMAT
+  - MU
+  - LRCX
+  - ASML
+  - JPM
+  - BAC
+  - WFC
+  - GS
+  - MS
+  - V
+  - MA
+  - UNH
+  - JNJ
+  - PFE
+  - MRK
+  - ABBV
+  - LLY
+  - XOM
+  - CVX
+  - COP
+  - HD
+  - LOW
+  - WMT
+  - TGT
+  - MCD
+  - SBUX
+  - DIS
+  - BA
+  - CAT
+  - GE
+  - CRM
+  - ORCL
+  - IBM
+
+strategy:
+  path: "strategies/example_strategy.py"
+  settings:
+    enabled: false
+    symbol: "AAPL"
+    quantity: 1
+    lookback: 20
+
+risk:
+  expected_account: null
+  trade_enabled: false
+  readonly: true
+  midday_no_trade_enabled: true
+  midday_no_trade_start: "11:30"
+  midday_no_trade_end: "13:30"
+  max_spread_pct: 0.003
+  max_order_quantity: 100
+  max_daily_orders: 50
+  block_if_symbol_has_open_order: true
+
+marketdata:
+  # realtime_bar = IB 5-second realtime bars + L1 quotes for spread checks.
+  # tick_l1 = reqMktData L1 updates only; lower line usage, local bar construction.
+  feed_mode: "tick_l1"
+  # 1=live, 2=frozen, 3=delayed, 4=delayed frozen.
+  market_data_type: 3
+  rolling_window_bars: 120
+  stale_after_seconds: 90
+  realtime_bar_size_seconds: 5
+  # IBKR realtime bars document a 100x volume multiplier for US stocks.
+  realtime_bar_volume_multiplier: 100.0
+  what_to_show: "TRADES"
+  use_rth: true
+  max_market_data_lines: 100
+  clock_flush_interval_seconds: 1.0
+
+storage:
+  root: "data"
+  audit_db: "data/audit.sqlite3"
+  parquet_root: "data/bars"
